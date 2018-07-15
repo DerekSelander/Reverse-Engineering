@@ -77,8 +77,8 @@ int list_snapshots(const char *vol)
 char *copyBootHash() {
     io_registry_entry_t chosen = IORegistryEntryFromPath(kIOMasterPortDefault, "IODeviceTree:/chosen");
     
-    char buf[128];
-    size_t size;
+    char buf[1024];
+    uint32_t size;
     char *hash;
     
     if (chosen && chosen != -1) {
@@ -90,16 +90,18 @@ char *copyBootHash() {
             hash = 0;
         }
         else {
-            ...
-            //this part was kinda nonsense
-            //guess I'll have to mess with it myself
-            //I also believe this would work as a replacement for find_system_snapshot() https://github.com/pwn20wndstuff/iOS-Apfs-Persistence-Exploit/blob/master/main.c#L71
-            //does not use copyBootHash()
-            ...
+            hash = (char*)malloc(size + 1);
+            memset(hash, 0, size + 1);
+            
+            for (int i = 0; i < size; i++) {
+                char ch = buf[i];
+                sprintf(hash, "%s%X", hash, (ch & 0xFF));
+            }
         }
     }
-    return hash;
+    return strdup(hash);
 }
+
 
 int vnode_lookup(const char *path, int flags, uint64_t *vnode, uint64_t vfs_context) {
     
