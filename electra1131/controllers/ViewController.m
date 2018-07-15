@@ -1,14 +1,10 @@
 //
 //  ViewController.m
-//  Electra
 //
-//  Created by Jake James on 7/14/18.
-//  Copyright © 2018 Jake James. All rights reserved.
+//  Copyright © 2018 Electra Team. All rights reserved.
 //
 
 #import "ViewController.h"
-#include "file_utils.h"
-#include "codesign.h"
 
 @interface ViewController ()
 
