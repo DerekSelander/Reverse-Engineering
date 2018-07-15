@@ -53,8 +53,7 @@ static ViewController *currentViewController;
     
     BOOL enable3DTouch = YES;
     
-   // int ret = offsets_init();
-    int ret = 0;
+    int ret = offsets_init();
     if (ret == -1) {
         [self.jailbreak setEnabled:NO];
         [self.jailbreak setAlpha:0.5];
