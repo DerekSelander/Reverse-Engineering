@@ -158,7 +158,7 @@ static ViewController *currentViewController;
     
     NSDictionary *dict = [NSDictionary dictionaryWithObjects:restartStr forKeys:@"JBProgress" count:1];
     
-    [defaultCenter postNotificationName:@"JB" object:nil userInfo:];
+    [defaultCenter postNotificationName:@"JB" object:nil userInfo:dict];
 }
 
 - (void)displaySnapshotWarning {
