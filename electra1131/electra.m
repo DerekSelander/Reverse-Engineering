@@ -77,29 +77,36 @@ int list_snapshots(const char *vol)
 char *copyBootHash() {
     io_registry_entry_t chosen = IORegistryEntryFromPath(kIOMasterPortDefault, "IODeviceTree:/chosen");
     
-    char buf[1024];
-    uint32_t size;
+    unsigned char buf[1024];
+    uint32_t size = 1024;
     char *hash;
     
     if (chosen && chosen != -1) {
-        kern_return_t ret = IORegistryEntryGetProperty(chosen, "boot-manifest-hash", buf, &size);
+        kern_return_t ret = IORegistryEntryGetProperty(chosen, "boot-manifest-hash", (char*)buf, &size);
         IOObjectRelease(chosen);
         
         if (ret) {
             printf("Unable to read boot-manifest-hash\n");
-            hash = 0;
+            hash = NULL;
         }
         else {
-            hash = (char*)malloc(size + 1);
-            memset(hash, 0, size + 1);
+            char *result = (char*)malloc((2 * size) | 1); // even number | 1 = that number + 1, just because why not
+            memset(result, 0, (2 * size) | 1);
             
-            for (int i = 0; i < size; i++) {
-                char ch = buf[i];
-                sprintf(hash, "%s%X", hash, (ch & 0xFF));
+            int i = 0;
+            while (i < size) {
+                unsigned char ch = buf[i];
+                sprintf(result + 2 * i++, "%02X", ch);
             }
+            printf("Hash: %s\n", result);
+            hash = strdup(result);
         }
     }
-    return strdup(hash);
+    else {
+        printf("Unable to get IODeviceTree:/chosen port\n");
+        hash = NULL;
+    }
+    return hash;
 }
 
 
