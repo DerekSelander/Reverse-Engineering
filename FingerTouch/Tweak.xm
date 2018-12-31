@@ -322,10 +322,10 @@ BKSTerminateApplicationForReasonAndReportWithDescription thething;
     if (kCFCoreFoundationVersionNumber >= 1443.0) {
         SBCoverSheetPresentationManager *sncc = [%c(SBCoverSheetPresentationManager) sharedInstance];
         if ([sncc isVisible]) {
-            [sncc setCoverSheetPresented:NO animated:YES completion:nil];
+            [sncc setCoverSheetPresented:NO animated:YES withCompletion:nil];
         }
         else {
-            [sncc setCoverSheetPresented:YES animated:YES completion:nil];
+            [sncc setCoverSheetPresented:YES animated:YES withCompletion:nil];
         }
     }
     else {
