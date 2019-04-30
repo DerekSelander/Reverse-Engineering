@@ -111,7 +111,6 @@ int fake_pspawn(pid_t *restrict pid , const char *restrict path, const posix_spa
     return 0;
 }
 
-// REPLACING EXECVE WITH POSIX_SPAWN??? doesn't that mean execve no longer replaces process
 int (*old_execve)(const char *__file, char *const *__argv, char *const *__envp);
 int fake_execve(const char *__file, char *const *__argv, char *const *__envp) {
     if (!jbd_port) {
