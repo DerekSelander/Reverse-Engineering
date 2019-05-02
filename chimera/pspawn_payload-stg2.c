@@ -35,6 +35,7 @@ enum sandbox_filter_type {
 extern const enum sandbox_filter_type SANDBOX_CHECK_NO_REPORT __attribute__((weak_import));
 int sandbox_check(pid_t pid, const char *operation, enum sandbox_filter_type type, ...);
 
+// used to trigger the CoreTrust bypass
 int jbd_file_op(mach_port_t port, char a2, uint64_t a3, char *path, unsigned int len);
 signed long long jbd_call(mach_port_t port, char a2, int a3);
 
